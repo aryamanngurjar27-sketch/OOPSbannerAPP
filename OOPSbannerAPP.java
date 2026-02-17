@@ -1,4 +1,4 @@
- import java.util.HashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 class BannerLetter {
@@ -62,18 +62,21 @@ public class OopsBannerApp {
 
         for (int row = 0; row < height; row++) {
 
-            for (char ch : text.toCharArray()) {
+            String[] rowParts = new String[text.length()];
 
+            for (int i = 0; i < text.length(); i++) {
+                char ch = text.charAt(i);
                 BannerLetter letter = bannerMap.get(ch);
 
                 if (letter != null) {
-                    System.out.print(letter.getPattern()[row] + "  ");
+                    rowParts[i] = letter.getPattern()[row];
                 } else {
-                    System.out.print("       "); // Space for undefined characters
+                    rowParts[i] = "     ";
                 }
             }
 
-            System.out.println();
+            // Optimized row rendering using String.join()
+            System.out.println(String.join("  ", rowParts));
         }
     }
 
