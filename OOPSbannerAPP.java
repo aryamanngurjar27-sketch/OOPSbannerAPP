@@ -1,37 +1,15 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class OPPSbannerAPP {
+public class OOPSBannerApp {
 
-    // Static Inner Class
-    static class CharacterPatternMap {
-
-        private char character;
-        private String[] pattern;
-
-        // Constructor
-        public CharacterPatternMap(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        // Getter
-        public char getCharacter() {
-            return character;
-        }
-
-        public String[] getPattern() {
-            return pattern;
-        }
-    }
-
-    // Pattern storage
-    private static Map<Character, CharacterPatternMap> patternLibrary = new HashMap<>();
+    // Centralized pattern library
+    private static final Map<Character, String[]> PATTERN_LIBRARY = new HashMap<>();
 
     // Initialize banner patterns
-    private static void initializePatterns() {
+    private static void initializePatternLibrary() {
 
-        patternLibrary.put('O', new CharacterPatternMap('O', new String[]{
+        PATTERN_LIBRARY.put('O', new String[]{
                 "  ***  ",
                 " *   * ",
                 "*     *",
@@ -39,9 +17,9 @@ public class OPPSbannerAPP {
                 "*     *",
                 " *   * ",
                 "  ***  "
-        }));
+        });
 
-        patternLibrary.put('P', new CharacterPatternMap('P', new String[]{
+        PATTERN_LIBRARY.put('P', new String[]{
                 "*****  ",
                 "*   *  ",
                 "*   *  ",
@@ -49,9 +27,9 @@ public class OPPSbannerAPP {
                 "*      ",
                 "*      ",
                 "*      "
-        }));
+        });
 
-        patternLibrary.put('S', new CharacterPatternMap('S', new String[]{
+        PATTERN_LIBRARY.put('S', new String[]{
                 " ****  ",
                 "*      ",
                 "*      ",
@@ -59,37 +37,39 @@ public class OPPSbannerAPP {
                 "    *  ",
                 "    *  ",
                 "****   "
-        }));
+        });
     }
 
-    // Display banner
-    private static void displayBanner(String text) {
+    // Build banner using pattern lookup
+    private static void displayBanner(String word) {
 
-        int height = 7;
+        int bannerHeight = 7;
 
-        for (int row = 0; row < height; row++) {
+        for (int row = 0; row < bannerHeight; row++) {
 
-            StringBuilder line = new StringBuilder();
+            StringBuilder lineBuilder = new StringBuilder();
 
-            for (char ch : text.toCharArray()) {
+            for (char letter : word.toCharArray()) {
 
-                CharacterPatternMap patternObj = patternLibrary.get(Character.toUpperCase(ch));
+                String[] pattern = PATTERN_LIBRARY.get(Character.toUpperCase(letter));
 
-                if (patternObj != null) {
-                    line.append(patternObj.getPattern()[row]).append(" ");
+                if (pattern != null) {
+                    lineBuilder.append(pattern[row]).append("  ");
+                } else {
+                    lineBuilder.append("       ");
                 }
             }
 
-            System.out.println(line.toString());
+            System.out.println(lineBuilder);
         }
     }
 
     public static void main(String[] args) {
 
-        initializePatterns();
+        initializePatternLibrary();
 
-        String banner = "OOPS";
+        String bannerWord = "OOPS";
 
-        displayBanner(banner);
+        displayBanner(bannerWord);
     }
 }
